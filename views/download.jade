@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+    div
+        h1 upload 
+        form(ref='uploadForm',action="/upload",method="post",enctype="multipart/form-data") File to be uploaded 
+          br
+          input(type = "file", name="uploadFile", id="")
+          br
+          button(type = "submit") upload
+
+    div
+      h1 download 
+      form(ref='uploadForm',action="/download", method="post")
+        button(type="submit") download
+

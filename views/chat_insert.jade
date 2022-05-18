@@ -1,0 +1,6 @@
+extends layout
+
+block content
+    form(action="/chat/send_message", method="post")
+        input(type="text", name="message", value="", placeholder="Enter your message")
+        button(type="submit") Send

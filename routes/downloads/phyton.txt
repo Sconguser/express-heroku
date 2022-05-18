@@ -1,0 +1,85 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from sklearn import datasets
+
+
+def step(z):
+    return 1.0 if (z > 0) else 0.0
+
+
+def perceptron(X, y, learningRate, iterations):
+    m, n = X.shape
+
+    theta = np.zeros((n + 1, 1))
+
+    #lista zle sklasyfikowanych przykladow
+    missList = []
+
+    for epoch in range(iterations):
+
+        # ilosc zle sklasyfikowanych przykladow
+        miss = 0
+
+        for idx, x_i in enumerate(X):
+
+            x_i = np.insert(x_i, 0, 1).reshape(-1, 1)
+
+            # obliczanie hipotezy
+            y_hat = step(np.dot(x_i.T, theta))
+
+            # jesli przyklad zostal zle sklasyfikowany
+            if (np.squeeze(y_hat) - y[idx]) != 0:
+                theta += learningRate * ((y[idx] - y_hat) * x_i)
+
+                miss += 1
+
+        #dodajemy zle sklasyfikowane przyklady
+        missList.append(miss)
+
+    return theta, missList
+
+
+def plotFunction(X, y, theta):
+
+    #obliczanie rownania prostej
+    x1 = [min(X[:, 0]), max(X[:, 0])]
+    m = -theta[1] / theta[2]
+    c = -theta[0] / theta[2]
+    x2 = m * x1 + c
+
+    # tworzenie wykresu
+    fig = plt.figure(figsize=(10, 8))
+    plt.plot(X[:, 0][y == 0], X[:, 1][y == 0], "r^")
+    plt.plot(X[:, 0][y == 1], X[:, 1][y == 1], "bs")
+    plt.xlabel("feature 1")
+    plt.ylabel("feature 2")
+    plt.title("Perceptron Algorithm")
+    plt.plot(x1, x2, 'y-')
+    plt.show()
+
+
+if __name__ == "__main__":
+
+    #tworzymy trzy zbiory, z czego do funkcji uczacej przekazujemy te zbiory pomniejszone o 10,
+    #wiec jezeli splotowany zbior bedzie dobrze sklasyfikowany to funkcja dziala poprawnie
+
+    # pierwszy zbior
+    X, y = datasets.make_blobs(n_samples=30, n_features=2,
+                               centers=2, cluster_std=1.05,
+                               random_state=2)
+    theta, missList = perceptron(X[:len(X) - 10], y[:len(y) - 10], 0.5, 100)
+    plotFunction(X, y, theta)
+
+    # drugi zbior
+    X, y = datasets.make_blobs(n_samples=400, n_features=2,
+                               centers=2, cluster_std=0.6,
+                               random_state=3)
+    theta, missList = perceptron(X[:len(X) - 10], y[:len(X) - 10], 0.5, 100)
+    plotFunction(X, y, theta)
+
+    #trzeci zbior
+    X, y = datasets.make_blobs(n_samples=700, n_features=2,
+                               centers=2, cluster_std=0.3,
+                               random_state=4)
+    theta, missList = perceptron(X[:len(X) - 10], y[:len(X) - 10], 0.5, 100)
+    plotFunction(X, y, theta)

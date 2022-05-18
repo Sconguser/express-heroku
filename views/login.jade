@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+    h1 Login page 
+    form(name = "login", method="post", action = "/")
+        div.input
+            span.label username 
+            input(type="text", name="username")
+        div.input
+            span.label password 
+            input(type="text", name="password")
+        div.actions 
+            button(type="submit", value="Sign in") Sign in!

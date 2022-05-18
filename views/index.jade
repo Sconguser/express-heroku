@@ -1,0 +1,40 @@
+
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p number: #{number}
+  if name
+    p Hello #{name}
+  if jwt 
+    p JWT TOKEN #{jwt}
+    form(id="verify", action="/verify", method="post")
+      button(type="submit", action="/") VerifyToken
+  script.
+    var signIn = function() {
+      console.log('sign in')
+      location.assign('/login')
+    }
+    var signOut = function() {
+      console.log(name);
+      name = null;
+      location.assign('/')
+    }
+    var session = function(){
+      console.log(number);
+    }
+    var download = function(){
+      location.assign('/download');
+    }
+    var verify = function(){
+      location.assign('/verify');
+    }
+
+  if !name
+    button(onclick='signIn()') Sign in
+  if name
+    button(onclick='signOut()') Sign out
+  button(onclick='download()') Download page
+  form(id="chat-get" action="/chat", method="get")
+    button(type="submit", action="/chat") Chat
