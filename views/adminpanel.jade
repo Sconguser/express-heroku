@@ -1,0 +1,21 @@
+extends layout
+block content
+    
+    h1 admin panel
+    div username activated
+    br
+    script.
+        var activate = async function(user){
+        console.log(user);
+        console.log('################################');
+        location.assign('/activate');
+        user = await pool.query('SELECT id, username from userswithactivation where id=($1)', user);
+        }
+    if notActivatedUsers
+        each user in notActivatedUsers
+            div #{user.username} #{user.activated} 
+            form(id="activate-user" action="admin_panel/activate", method="post")
+                input( id="name" type="hidden" name="id" value= user.id)
+                button(type="submit") activate #{user.username}
+            //- button(onclick='activate('+user.id+')') #{user.username}
+    

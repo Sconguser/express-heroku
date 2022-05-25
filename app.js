@@ -4,12 +4,15 @@ var path = require('path');
 var logger = require('morgan');
 var session = require('express-session');
 var fileUpload = require('express-fileupload');
+var flash = require('express-flash')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var coolRouter = require('./routes/cool');
 var loginRouter = require('./routes/login');
 var chatRouter = require('./routes/chat');
+var signUpRouter = require('./routes/sign_up');
 var downloadRouter = require('./routes/download');
+var adminPanelRouter = require('./routes/admin_panel');
 var app = express();
 var http = require('http');
 
@@ -33,14 +36,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(fileUpload());
-
+app.use(flash());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/users/cool', coolRouter);
 app.use('/login', loginRouter);
 app.use('/download', downloadRouter);
-app.use('/chat', chatRouter)
-
+app.use('/chat', chatRouter);
+app.use('/sign_up', signUpRouter);
+app.use('/admin_panel', adminPanelRouter);
 // catch 404 and forward to error handler
 
 
@@ -62,7 +66,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 app.use(function(req, res, next) {
-  next(createError(404));
+  // next(createError(404));
 });
 
 app.listen(process.env.PORT || 3000,

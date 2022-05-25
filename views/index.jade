@@ -30,11 +30,21 @@ block content
     var verify = function(){
       location.assign('/verify');
     }
-
+    var signUp = function(){
+      location.assign('/sign_up');
+    }
+    var adminPanel = function(){
+      location.assign('/admin_panel');
+    }
   if !name
     button(onclick='signIn()') Sign in
   if name
     button(onclick='signOut()') Sign out
+  button(onclick='signUp()') Sign Up
   button(onclick='download()') Download page
   form(id="chat-get" action="/chat", method="get")
     button(type="submit", action="/chat") Chat
+  if user
+    if user.isAdmin
+      button(onclick='adminPanel()') adminPanel
+

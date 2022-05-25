@@ -1,16 +1,16 @@
 extends layout 
 
 block content 
-    h1 Login page 
-    form(name = "login", method="post", action = "/")
+    h1 Register page 
+    form(name = "sign_up", method="post", action = "/sign_up")
         div.input
             span.label username 
             input(type="text", name="username")
         div.input
             span.label password 
             input(type="text", name="password")
+        div.input 
+            span.label is admin
+            input(type="checkbox", name="isAdmin")
         div.actions 
-            button(type="submit", value="Sign in") Sign in!
-    
-    if error
-        p #{error}
+            button(type="submit", value="Sign up") Sign up!
