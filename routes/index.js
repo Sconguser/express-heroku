@@ -38,7 +38,6 @@ router.post('/', async (req,res,next)=>{
           req.flash("error", "Your account has not been activated yet");
           res.render('login', {error:req.flash('error')});
         }
-        if(newUser.a)
         req.session.user = newUser;
         if(req.session.page_views){
               req.session.page_views++;
