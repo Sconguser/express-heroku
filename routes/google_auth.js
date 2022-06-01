@@ -35,6 +35,8 @@ router.get('/', (req, res) => {
 
 router.get('/auth/google/callback', function (req, res) {
     const code = req.query.code
+    console.log('____________________ ');
+    console.log(code);
     if (code) {
         // Get an access token based on our OAuth code
         oAuth2Client.getToken(code, function (err, tokens) {
