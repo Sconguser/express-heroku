@@ -13,9 +13,9 @@ var chatRouter = require('./routes/chat');
 var signUpRouter = require('./routes/sign_up');
 var downloadRouter = require('./routes/download');
 var adminPanelRouter = require('./routes/admin_panel');
+var googleAuthRouter = require('./routes/google_auth');
 var app = express();
 var http = require('http');
-
 
 
 app.use(session({secret: "Shh, its a secret!"}));
@@ -45,6 +45,7 @@ app.use('/download', downloadRouter);
 app.use('/chat', chatRouter);
 app.use('/sign_up', signUpRouter);
 app.use('/admin_panel', adminPanelRouter);
+app.use('/google_auth', googleAuthRouter);
 // catch 404 and forward to error handler
 
 
